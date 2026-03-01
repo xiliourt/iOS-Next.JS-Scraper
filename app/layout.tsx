@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
 import './globals.css'; // Global styles
-import Footer from './Footer';
+import Footer from './components/Footer';
 
 export const metadata: Metadata = {
   title: 'iOS Regional Pricing Scraper',
