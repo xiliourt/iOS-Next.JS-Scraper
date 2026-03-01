@@ -262,7 +262,7 @@ const App = () => {
         </div>
       )}
     </div>
-    <Footer />
+    <Footer git="https://github.com/xiliourt/iOS-Next.JS-Scraper/" />
   );
 };
 
