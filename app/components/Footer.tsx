@@ -8,7 +8,7 @@ const Footer = ({ git }: FooterProps) => {
       <p className="text-slate-500 text-sm">
         Open Source Project. View source on{' '}
         <a 
-          href="https://github.com/xiliourt/iOS-Next.JS-Scraper" 
+          href={git}
           target="_blank" 
           rel="noopener noreferrer" 
           className="text-purple-400 hover:text-purple-300 hover:underline transition-colors font-medium"
