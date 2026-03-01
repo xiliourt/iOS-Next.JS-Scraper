@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { countryData, filterHighestPriceProducts, groupProducts, ScrapedProduct } from '@/lib/utils';
 import { getProducts } from '@/lib/scraper';
 
-export const maxDuration = 60; // Extend Vercel timeout if possible (Pro only, but good practice)
+export const maxDuration = 60; 
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -17,19 +17,10 @@ export async function GET(request: Request) {
     const cleanAppId = appId.startsWith('id') ? appId : `id${appId}`;
 
     try {
-        // Since Vercel serverless functions have limits, we'll process in parallel but with a concurrency limit
-        // or just try to do them all if the timeout allows.
-        // For a hobby account, 10s is tight for 150+ requests.
-        // Let's try to do them in chunks.
         
         const allScrapedResults: ScrapedProduct[] = [];
         
-        // We'll use a smaller subset for the demo if it's too slow, 
-        // but the user asked to convert the logic which used ALL countries.
-        // To avoid timeout, we might want to limit to top countries or let the user choose.
-        // However, I will implement it for all and see.
-        
-        const CONCURRENCY_LIMIT = 20;
+        const CONCURRENCY_LIMIT = 50;
         const chunks: any[][] = [];
         for (let i = 0; i < countryData.length; i += CONCURRENCY_LIMIT) {
             chunks.push(countryData.slice(i, i + CONCURRENCY_LIMIT));
