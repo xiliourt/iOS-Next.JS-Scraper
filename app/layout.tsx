@@ -10,6 +10,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body suppressHydrationWarning>{children}</body>
+      <Footer git="https://github.com/xiliourt/iOS-Next.JS-Scraper" />
     </html>
   );
 }
