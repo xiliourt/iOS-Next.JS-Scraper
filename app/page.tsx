@@ -6,6 +6,7 @@ import { LOADING_MESSAGES } from "./constants";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { Controls } from "./components/Controls";
 import { PriceTable } from "./components/PriceTable";
+import Footer from './components/Footer';
 import './globals.css';
 
 const App = () => {
@@ -220,7 +221,7 @@ const App = () => {
   };
 
   return (
-    <div className="app-container">
+    <div className="app-container pb-20">
       <h1>App Store Price Scraper</h1>
 
       <Controls
@@ -260,7 +261,9 @@ const App = () => {
           <p>Enter an App ID and search to view global pricing comparisons.</p>
         </div>
       )}
+    <Footer git="https://github.com/xiliourt/iOS-Next.JS-Scraper" />
     </div>
+    
   );
 };
 
