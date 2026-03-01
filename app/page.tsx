@@ -6,7 +6,7 @@ import { LOADING_MESSAGES } from "./constants";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { Controls } from "./components/Controls";
 import { PriceTable } from "./components/PriceTable";
-import Footer from './components/Footer';
+import Footer from "./components/footer";
 import './globals.css';
 
 const App = () => {
@@ -261,8 +261,9 @@ const App = () => {
           <p>Enter an App ID and search to view global pricing comparisons.</p>
         </div>
       )}
+
+      <Footer git="https://github.com/xiliourt/iOS-Next.JS-Scraper" />
     </div>
-    <Footer git="https://github.com/xiliourt/iOS-Next.JS-Scraper/" />
   );
 };
 
