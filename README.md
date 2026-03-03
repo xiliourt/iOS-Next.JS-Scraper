@@ -1,2 +1,4 @@
 # Instant deploy with vercel
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fxiliourt%2FiOS-Next.JS-Scraper)
+
+This uses a fair bit of CPU time, but easily within hobby limits for personal use (up to ~30s CPU time per request).
