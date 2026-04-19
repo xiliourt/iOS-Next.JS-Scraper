@@ -10,6 +10,9 @@ export const getProducts = async (countryCode: string, appId: string) => {
         const response = await fetch(targetUrl, {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+            }, 
+            next: {
+                revalidate: 86400 // Cache scraped results for 24 hours via Next.js Data Cache
             }
         });
 
