@@ -27,7 +27,7 @@ export const countryData: Country[] = [
     { countryCode: 'br', countryName: 'Brazil', currency: 'BRL' },
     { countryCode: 'vg', countryName: 'British Virgin Islands', currency: 'USD' },
     { countryCode: 'bn', countryName: 'Brunei Darussalam', currency: 'USD' },
-    { countryCode: 'bg', countryName: 'Bulgaria', currency: 'BGN' },
+    { countryCode: 'bg', countryName: 'Bulgaria', currency: 'EUR' },
     { countryCode: 'kh', countryName: 'Cambodia', currency: 'USD' },
     { countryCode: 'ca', countryName: 'Canada', currency: 'CAD' },
     { countryCode: 'cv', countryName: 'Cape Verde', currency: 'USD' },
