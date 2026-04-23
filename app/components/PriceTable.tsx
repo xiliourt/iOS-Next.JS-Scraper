@@ -63,7 +63,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({
         </thead>
         <tbody>
           {sortedData.map((row) => {
-             const periodMap: Record<string, string> = { 'P1W': 'Weekly', 'P1M': 'Monthly', 'P3M': 'Quarterly', 'P6M': 'Bi-Annually', 'P1Y': 'Yearly' };
+             const periodMap: Record<string, string> = { 'P7D': 'Weekly', 'P1W': 'Weekly', 'P1M': 'Monthly', 'P3M': 'Quarterly', 'P6M': 'Bi-Annually', 'P1Y': 'Yearly' };
              const periodDisplay = row.subscriptionPeriod ? (periodMap[row.subscriptionPeriod] || row.subscriptionPeriod) : 'None';
              return (
             <tr key={row.id}>
