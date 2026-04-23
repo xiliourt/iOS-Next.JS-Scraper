@@ -115,13 +115,19 @@ const App = () => {
 
           entries.forEach((entry) => {
             const pName = entry.product || productName;
-            const groupKey = `${pName}|${entry.currency}|${entry.cost}`;
+            const subPeriod = entry.subscriptionPeriod || 'none';
+            const introOffer = entry.introOfferCost !== undefined && entry.introOfferCost !== null ? entry.introOfferCost : 'none';
+            const groupKey = `${pName}|${entry.currency}|${entry.cost}|${subPeriod}|${introOffer}`;
 
             if (!groupedData[groupKey]) {
               const rate = rates[entry.currency];
               let converted = null;
+              let convertedIntro = null;
               if (rate) {
                 converted = entry.cost / rate;
+                if (entry.introOfferCost !== undefined && entry.introOfferCost !== null) {
+                  convertedIntro = entry.introOfferCost / rate;
+                }
               }
 
               groupedData[groupKey] = {
@@ -132,6 +138,9 @@ const App = () => {
                 convertedCost: converted,
                 targetCurrency: targetCurrency,
                 countries: [...entry.countries],
+                subscriptionPeriod: entry.subscriptionPeriod,
+                introOfferCost: entry.introOfferCost,
+                convertedIntroOfferCost: convertedIntro,
               };
             } else {
               groupedData[groupKey].countries.push(...entry.countries);

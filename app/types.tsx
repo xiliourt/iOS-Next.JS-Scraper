@@ -3,6 +3,8 @@ export interface PriceEntry {
   currency: string;
   cost: number;
   countries: string[];
+  subscriptionPeriod?: string | null;
+  introOfferCost?: number | null;
 }
 
 export interface TableRow {
@@ -13,4 +15,7 @@ export interface TableRow {
   convertedCost: number | null;
   targetCurrency: string;
   countries: string[];
+  subscriptionPeriod?: string | null;
+  introOfferCost?: number | null;
+  convertedIntroOfferCost?: number | null;
 }

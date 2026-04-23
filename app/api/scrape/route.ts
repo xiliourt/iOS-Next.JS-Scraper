@@ -12,15 +12,14 @@ export async function GET(request: Request) {
         return NextResponse.json({ message: 'appId is required' }, { status: 400 });
     }
 
-    // Clean App ID (remove 'id' prefix if user included it, or ensure it has it)
-    // Apple URLs usually look like .../app/id123456789
-    const cleanAppId = appId.startsWith('id') ? appId : `id${appId}`;
+    // Clean App ID (remove 'id' prefix if user included it)
+    const cleanAppId = appId.startsWith('id') ? appId.substring(2) : appId;
 
     try {
         
         const allScrapedResults: ScrapedProduct[] = [];
         
-        const CONCURRENCY_LIMIT = 50;
+        const CONCURRENCY_LIMIT = 20;
         const chunks: any[][] = [];
         for (let i = 0; i < countryData.length; i += CONCURRENCY_LIMIT) {
             chunks.push(countryData.slice(i, i + CONCURRENCY_LIMIT));

@@ -27,7 +27,7 @@ export const countryData: Country[] = [
     { countryCode: 'br', countryName: 'Brazil', currency: 'BRL' },
     { countryCode: 'vg', countryName: 'British Virgin Islands', currency: 'USD' },
     { countryCode: 'bn', countryName: 'Brunei Darussalam', currency: 'USD' },
-    { countryCode: 'bg', countryName: 'Bulgaria', currency: 'EUR' },
+    { countryCode: 'bg', countryName: 'Bulgaria', currency: 'BGN' },
     { countryCode: 'kh', countryName: 'Cambodia', currency: 'USD' },
     { countryCode: 'ca', countryName: 'Canada', currency: 'CAD' },
     { countryCode: 'cv', countryName: 'Cape Verde', currency: 'USD' },
@@ -227,19 +227,22 @@ export const normalizePrice = (price: string) => {
 
 export interface ScrapedProduct {
     product: string;
-    cost: string;
+    cost: number;
     countryCode: string;
     countryName: string;
     currency: string;
+    subscriptionPeriod?: string | null;
+    introOfferCost?: number | null;
 }
 
 export function filterHighestPriceProducts(allProducts: ScrapedProduct[]) {
     const highestPriceProducts = new Map<string, ScrapedProduct>();
 
     for (const product of allProducts) {
-        const key = `${product.countryCode}-${product.product}`;
+        // We group by product name and subscription period, to differentiate Monthly vs Yearly if the names are identical
+        const key = `${product.countryCode}-${product.product}-${product.subscriptionPeriod || 'none'}`;
         const existing = highestPriceProducts.get(key);
-        const currentCost = normalizePrice(product.cost);
+        const currentCost = product.cost;
 
         if (isNaN(currentCost)) continue;
 
@@ -248,7 +251,7 @@ export function filterHighestPriceProducts(allProducts: ScrapedProduct[]) {
             continue;
         }
 
-        const existingCost = normalizePrice(existing.cost);
+        const existingCost = existing.cost;
         if (isNaN(existingCost) || currentCost > existingCost) {
             highestPriceProducts.set(key, product);
         }
@@ -261,15 +264,17 @@ export interface GroupedProduct {
     currency: string;
     cost: number;
     countries: string[];
+    subscriptionPeriod?: string | null;
+    introOfferCost?: number | null;
 }
 
 export function groupProducts(allProducts: ScrapedProduct[]) {
     const groupedByProductAndPrice = allProducts.reduce((acc: any, item) => {
-        const normalizedCost = normalizePrice(item.cost);
+        const normalizedCost = item.cost;
         if (isNaN(normalizedCost)) return acc;
 
         const effectiveCurrency = getCurrencyFromCountryCode(item.countryCode) || item.currency;
-        const key = `${item.product}-${effectiveCurrency}-${normalizedCost}`;
+        const key = `${item.product}-${effectiveCurrency}-${normalizedCost}-${item.subscriptionPeriod || 'none'}-${item.introOfferCost !== undefined && item.introOfferCost !== null ? item.introOfferCost : 'none'}`;
 
         if (!acc[key]) {
             acc[key] = {
@@ -277,6 +282,8 @@ export function groupProducts(allProducts: ScrapedProduct[]) {
                 currency: effectiveCurrency,
                 cost: normalizedCost,
                 countries: new Set(),
+                subscriptionPeriod: item.subscriptionPeriod,
+                introOfferCost: item.introOfferCost,
             };
         }
         acc[key].countries.add(item.countryName);
