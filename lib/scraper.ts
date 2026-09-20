@@ -7,8 +7,14 @@ export const getProducts = async (countryCode: string, appId: string) => {
 
     try {
         while (nextUrl) {
-            // Ensure full URL is formed if the next link is relative
-            const targetUrl: string = nextUrl.startsWith('http') ? nextUrl : `https://apps.apple.com/api/apps/${nextUrl}?platform=iphone`;
+            let targetUrl: string;
+            if (nextUrl.startsWith('http')) {
+                targetUrl = nextUrl;
+            } else {
+                const separator = nextUrl.includes('?') ? '&' : '?';
+                const cleanNextUrl = nextUrl.startsWith('/') ? nextUrl : `/${nextUrl}`;
+                targetUrl = `https://apps.apple.com/api/apps${cleanNextUrl}${separator}platform=iphone`;
+            }
 
             const response = await fetch(targetUrl, {
                 headers: {
